@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>JamoaX — futbol uchun adolatli jamoalar</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("jx-theme")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Nunito:wght@500;700;800&display=swap">
+<style>
+:root{--bg:#eef3ea;--card:#fff;--ink:#14241b;--mute:#5a6a60;--line:#d8e0d3;--field:#f4f8f0;--a:#2563eb;--a2:#dbe7ff;--b:#d97706;--b2:#ffe9c7;--g1:#16a765;--g2:#0a7a46;--gink:#fff;--glow:#16a76555;--sh:0 10px 30px #0a2a1a1f;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#06110b;--card:#0e1f16;--ink:#ecf5e8;--mute:#9db1a3;--line:#1f3829;--field:#0a1810;--a:#6b9bff;--a2:#12234a;--b:#ffb03a;--b2:#3a2608;--g1:#d6ff55;--g2:#8de02c;--gink:#0a1a0f;--glow:#c6ff3d44;--sh:0 10px 30px #0008}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Nunito","Segoe UI",system-ui,sans-serif;line-height:1.6;overflow-x:hidden}
+h1,h2,h3,.logo{font-family:"Barlow Condensed","Arial Narrow",sans-serif;margin:0;line-height:1;text-transform:uppercase;letter-spacing:.02em}
+a{color:inherit;text-decoration:none}
+.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sec{max-width:1040px;margin:0 auto;padding:80px 18px 10px}
+h2{font-size:clamp(2.1rem,6vw,3.2rem);display:flex;align-items:center;gap:12px;margin-bottom:12px}
+h2:before{content:"";width:7px;height:1em;border-radius:4px;background:linear-gradient(var(--g1),var(--g2))}
+.sub{color:var(--mute);margin:0 0 30px;max-width:56ch}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(10px + env(safe-area-inset-top,0px)) 18px 10px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.logo{font-size:1.7rem;font-weight:700;display:flex;align-items:center;gap:8px}.logo .i{color:var(--g2);width:1.1em;height:1.1em}.logo b{color:var(--g2)}
+:root[data-theme="dark"] .logo .i,:root[data-theme="dark"] .logo b{color:var(--g1)}
+.links{display:flex;gap:24px;font-weight:800;font-size:.92rem;color:var(--mute)}.links a:hover{color:var(--ink)}
+@media(max-width:760px){.links{display:none}}
+.navr{display:flex;gap:10px;align-items:center}
+.tg{padding:0;width:44px;height:44px;border-radius:12px;background:var(--field);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+.tg:before{display:none}.tg .sun{display:none}
+:root[data-theme="dark"] .tg .sun{display:block}:root[data-theme="dark"] .tg .moon{display:none}
+.btn,button{font:inherit;font-weight:800;border:2px solid transparent;cursor:pointer;color:var(--gink);background:linear-gradient(135deg,var(--g1),var(--g2));padding:13px 24px;border-radius:14px;min-height:50px;position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 6px 20px var(--glow);transition:transform .15s,box-shadow .2s,filter .15s}
+.btn:before,button:not(.ghost):not(.tg):before{content:"";position:absolute;top:0;left:-80%;width:45%;height:100%;background:linear-gradient(100deg,transparent,#fff6,transparent);transform:skewX(-20deg);animation:shine 4s ease-in-out infinite}
+@keyframes shine{0%,65%{left:-80%}100%{left:140%}}
+.btn:hover,button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 28px var(--glow);filter:brightness(1.06)}
+button:active:not(:disabled){transform:scale(.97)}
+.btn.sm{padding:8px 18px;min-height:44px}
+.ghost{background:transparent!important;color:var(--ink)!important;border-color:var(--line)!important;box-shadow:none!important}
+.ghost:hover:not(:disabled){background:var(--field)!important;border-color:var(--mute)!important}
+button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+:focus-visible{outline:3px solid var(--a);outline-offset:3px}
+.hero{position:relative;overflow:hidden;color:#fff;padding:120px 18px 90px;background:radial-gradient(60% 90% at 85% 0,#2f8f5a99,transparent 70%),radial-gradient(50% 80% at 8% 0,#c6ff3d22,transparent 70%),repeating-linear-gradient(90deg,#08301e 0 70px,#0a3a24 70px 140px),#06140d}
+.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:#ffffff2e}
+.hw{max-width:1040px;margin:0 auto;display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center;position:relative;z-index:1}
+@media(max-width:860px){.hw{grid-template-columns:1fr}}
+.tag{display:inline-flex;align-items:center;gap:8px;background:#ffffff1f;border:1px solid #ffffff3a;padding:6px 14px;border-radius:99px;font-weight:800;font-size:.85rem;margin-bottom:16px;animation:rise .7s both}
+.hero h1{font-size:clamp(3rem,10vw,5.4rem);margin-bottom:16px;animation:rise .7s .1s both}
+.hero h1 em{font-style:normal;color:#d6ff55}
+.hero p{color:#d9ecdf;font-size:1.1rem;max-width:42ch;margin:0 0 26px;animation:rise .7s .2s both}
+.cta{display:flex;gap:12px;flex-wrap:wrap;animation:rise .7s .3s both}
+.hero .btn{background:linear-gradient(135deg,#d6ff55,#8de02c);color:#0a1a0f}
+.hero .btn.ghost{color:#fff!important;border-color:#ffffff55!important}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+.pitch{border-radius:22px;border:3px solid #ffffff44;box-shadow:0 20px 60px #0007,0 0 60px #8de02c33;overflow:hidden;animation:rise .9s .3s both;background:#0b4a2f}
+.pitch svg{display:block;width:100%;height:auto}
+.dot{animation:fly 7s ease-in-out infinite}
+@keyframes fly{0%,12%{transform:translate(0,0)}38%,82%{transform:translate(var(--x),var(--y))}100%{transform:translate(0,0)}}
+.ballr{transform-origin:200px 130px;animation:spin 7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.rv{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1);transition-delay:var(--d,0s)}.rv.in{opacity:1;transform:none}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:1040px;margin:-44px auto 0;padding:0 18px;position:relative;z-index:2}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;align-items:center;gap:14px;box-shadow:var(--sh)}
+.ico{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--gink)}.ico .i{width:24px;height:24px}
+.stat b{display:block;font-family:"Barlow Condensed",sans-serif;font-size:2.2rem;line-height:1}.stat span{color:var(--mute);font-weight:800;font-size:.82rem}
+.steps,.feats{display:grid;gap:14px}.steps{grid-template-columns:repeat(4,1fr)}.feats{grid-template-columns:repeat(3,1fr)}
+@media(max-width:860px){.steps{grid-template-columns:1fr 1fr}.feats{grid-template-columns:1fr 1fr}}@media(max-width:520px){.steps,.feats{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;transition:transform .25s,border-color .25s}
+.card:hover{transform:translateY(-5px);border-color:var(--g2)}
+.card .ico{margin-bottom:14px}.card h3{font-size:1.4rem;margin-bottom:6px}.card p{margin:0;color:var(--mute);font-size:.95rem}
+.tool,.ai{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;box-shadow:var(--sh)}
+@media(max-width:560px){.tool,.ai{padding:16px}}
+.th2{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+h3.t{font-size:1.5rem}
+.count{font-weight:800;font-size:.85rem;color:var(--mute);background:var(--field);border:1px solid var(--line);border-radius:99px;padding:4px 14px}.count.ok{color:var(--g2);border-color:var(--g2)}
+:root[data-theme="dark"] .count.ok{color:var(--g1);border-color:var(--g1)}
+.names{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.p{display:flex;align-items:center;gap:10px;background:var(--field);border:2px solid var(--line);border-radius:14px;padding:6px 12px 6px 6px;transition:.15s}
+.p:focus-within{border-color:var(--g2);box-shadow:0 0 0 4px var(--glow)}
+.p.bad{border-color:#e5484d;background:#e5484d1f}
+.n{flex:none;width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--gink);display:grid;place-items:center;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.25rem}
+.p input,.chatin{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-weight:800;color:var(--ink);padding:9px 0}
+.p input:focus-visible,.chatin:focus-visible{outline:0}
+.err{color:#e5484d;font-weight:800;font-size:.92rem;min-height:1.4em;margin:10px 0 0}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:16px;position:relative}
+.teams:after{content:"VS";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50px;height:50px;border-radius:50%;background:var(--ink);color:var(--card);border:4px solid var(--card);display:grid;place-items:center;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:1.2rem;z-index:2}
+@media(max-width:600px){.teams{grid-template-columns:1fr}}
+.team{border-radius:18px;border:2px solid;overflow:hidden}
+.team.a{border-color:var(--a);background:linear-gradient(180deg,var(--a2),var(--card));box-shadow:0 10px 30px #2563eb30}
+.team.b{border-color:var(--b);background:linear-gradient(180deg,var(--b2),var(--card));box-shadow:0 10px 30px #e07b0030}
+.thd{padding:12px 16px;color:#fff;font-family:"Barlow Condensed",sans-serif;font-size:1.6rem;font-weight:700;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+.a .thd{background:linear-gradient(135deg,#1d4ed8,#3b82f6)}.b .thd{background:linear-gradient(135deg,#d96a00,#ffa42b)}
+.thd span+span{font-family:"Nunito",sans-serif;font-size:.8rem;text-transform:none;background:#0003;padding:3px 12px;border-radius:99px}
+.team ul{list-style:none;margin:0;padding:12px}
+.team li{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:7px 14px 7px 7px;margin-bottom:8px;font-weight:800;min-height:50px;word-break:break-word}
+.team li:last-child{margin-bottom:0}
+.team li i{flex:none;width:34px;height:34px;border-radius:50%;font-style:normal;font-family:"Barlow Condensed",sans-serif;font-size:1.15rem;display:grid;place-items:center;color:#fff}
+.a li i{background:#2563eb}.b li i{background:#e07b00}
+.team li.roll{color:var(--mute)}.team li.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes pop{from{transform:translateY(14px) scale(.93);opacity:0}to{transform:none;opacity:1}}
+.empty{border:2px dashed var(--line);border-radius:16px;padding:30px 14px;text-align:center;color:var(--mute);font-weight:700;margin:0}
+.sv{list-style:none;margin:0;padding:0}
+.sv li{background:var(--field);border:1px solid var(--line);border-left:6px solid var(--g2);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:flex;gap:12px;justify-content:space-between;align-items:flex-start}
+.sv small{display:block;color:var(--mute);font-weight:800}.sv .tt{font-weight:700}.sv b{display:inline-block;min-width:1.7em}.sv .ta b{color:var(--a)}.sv .tb b{color:var(--b)}
+.sv button{padding:6px 12px;min-height:40px;font-size:.85rem}
+.hsv{margin:26px 0 12px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.chips button{min-height:40px;padding:8px 14px;font-size:.85rem;border-radius:99px}
+.log{height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:14px;border-radius:16px;background:var(--field);border:1px solid var(--line)}
+.msg{max-width:86%;padding:10px 14px;border-radius:16px;font-weight:700;white-space:pre-wrap;word-break:break-word;animation:pop .3s both}
+.msg.me{align-self:flex-end;background:linear-gradient(135deg,var(--g1),var(--g2));color:var(--gink);border-bottom-right-radius:4px}
+.msg.bot{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:4px}
+.dots span{display:inline-block;width:8px;height:8px;margin:0 2px;border-radius:50%;background:var(--mute);animation:bl 1s infinite}.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.chatrow{display:flex;gap:10px;margin-top:12px;align-items:center}
+.chatrow .box{flex:1;display:flex;background:var(--field);border:2px solid var(--line);border-radius:14px;padding:0 14px}.chatrow .box:focus-within{border-color:var(--g2)}
+.chatrow button{padding:0;width:52px}
+details{border:1px solid var(--line);border-radius:16px;background:var(--card);margin-bottom:12px}
+summary{cursor:pointer;list-style:none;padding:17px 20px;font-weight:800;display:flex;justify-content:space-between;gap:12px}summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:1.5rem;line-height:1;color:var(--g2);transition:transform .3s}details[open] summary:after{transform:rotate(135deg)}
+details p{margin:0;padding:0 20px 18px;color:var(--mute);animation:rise .4s both}
+.final{margin:80px auto 0;max-width:1040px;border-radius:28px;padding:60px 22px;text-align:center;color:#fff;position:relative;overflow:hidden;background:repeating-linear-gradient(90deg,#08301e 0 70px,#0a3a24 70px 140px)}
+.final h2{justify-content:center;font-size:clamp(2.2rem,7vw,3.8rem)}.final h2:before{display:none}.final p{margin:0 auto 24px;max-width:42ch;color:#d9ecdf}
+.final .btn{background:linear-gradient(135deg,#d6ff55,#8de02c);color:#0a1a0f}
+.final-w{padding:0 18px}
+footer{margin-top:60px;border-top:1px solid var(--line);padding:26px 18px;text-align:center;color:var(--mute);font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,30px);background:var(--ink);color:var(--card);padding:12px 22px;border-radius:14px;font-weight:800;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:90vw;text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+.rm{min-height:34px;width:34px;padding:0;border-radius:10px;flex:none;box-shadow:none}
+.rm .i{width:16px;height:16px}
+.hint{color:var(--mute);font-weight:700;font-size:.9rem;margin:10px 0 0}
+.lbl{display:block;font-weight:800;font-size:.85rem;margin:12px 0 6px;color:var(--mute)}
+.fld{width:100%;padding:11px 12px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);font:inherit;font-weight:700}
+.keybox{margin:0 0 14px;background:var(--field)}[hidden]{display:none!important}
+.menu{display:none}
+@media(max-width:760px){.menu{display:inline-flex}.links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--bg);border-bottom:1px solid var(--line);padding:4px 18px 10px;box-shadow:0 20px 30px #0005}.links.open{display:flex}.links a{padding:15px 4px;border-bottom:1px solid var(--line);font-size:1.05rem;color:var(--ink)}.links a:last-child{border:0}}
+@media(max-width:480px){.navr .btn{display:none}.logo{font-size:1.45rem}}
+.names{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.p{display:grid;grid-template-columns:36px 1fr 34px;gap:8px 10px;padding:7px 8px 8px 7px}
+.rsel{grid-column:1/-1;width:100%;padding:8px 10px;border:2px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);font:inherit;font-weight:700;font-size:.88rem}
+.rl{margin-left:auto;display:inline-flex;align-items:center;gap:5px;font-style:normal;font-size:.72rem;font-weight:800;padding:3px 10px;border-radius:99px;background:var(--field);border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.rl .i{width:13px;height:13px}
+.team li span{min-width:0}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8.5l3 2.2-1.2 3.5h-3.6L9 10.7zM12 8.5V2.3M15 10.7l5.6-1.8M13.8 14.2l3.4 4.7M10.2 14.2l-3.4 4.7M9 10.7 3.4 8.9"/></symbol>
+<symbol id="i-shuffle" viewBox="0 0 24 24"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></symbol>
+<symbol id="i-repeat" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16M8 16H3v5"/></symbol>
+<symbol id="i-save" viewBox="0 0 24 24"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/></symbol>
+<symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 3v4M17 5h4M5 17v4M3 19h4"/></symbol>
+<symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6M10 11v6M14 11v6"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4"/></symbol>
+<symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></symbol>
+<symbol id="i-dice" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1"/><circle cx="15.5" cy="15.5" r="1"/><circle cx="15.5" cy="8.5" r="1"/><circle cx="8.5" cy="15.5" r="1"/></symbol>
+<symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2 21v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14a5 5 0 0 1 5 5v2"/></symbol>
+<symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
+<symbol id="i-bot" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 4v4M9 13v1M15 13v1M9 17h6"/><circle cx="12" cy="3" r="1"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+<symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+<symbol id="i-vol" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></symbol>
+<symbol id="i-mute" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM22 9l-6 6M16 9l6 6"/></symbol>
+<symbol id="i-key" viewBox="0 0 24 24"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/></symbol>
+<symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+<symbol id="i-glove" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-4 0M14 10V4a2 2 0 0 0-4 0v2M10 10.5V6a2 2 0 0 0-4 0v8M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.9-5.9-2.4L3.4 16a2 2 0 0 1 3.2-2.4L8 15"/></symbol>
+<symbol id="i-mid" viewBox="0 0 24 24"><path d="M3 12h18M7 8l-4 4 4 4M17 8l4 4-4 4"/></symbol>
+<symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9z"/></symbol>
+</defs></svg>
+
+<nav class="nav"><a href="#top" class="logo"><svg class="i" aria-hidden="true"><use href="#i-ball"/></svg>Jamoa<b>X</b></a>
+<div class="links" id="links"><a href="#how">Qanday ishlaydi</a><a href="#try">Jamoa tuzish</a><a href="#ai">AI murabbiy</a><a href="#faq">Savollar</a></div>
+<div class="navr"><button class="tg" id="tgl" aria-label="Rejimni almashtirish"><span class="moon"><svg class="i" aria-hidden="true"><use href="#i-moon"/></svg></span><span class="sun"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg></span></button><button class="tg menu" id="menu" aria-label="Menyu" aria-expanded="false"><svg class="i" aria-hidden="true"><use href="#i-menu"/></svg></button><a class="btn sm" href="#try">Boshlash</a></div></nav>
+
+<header class="hero" id="top"><div class="hw">
+ <div>
+  <span class="tag"><svg class="i" aria-hidden="true"><use href="#i-trophy"/></svg> Futbol va faol dam olish</span>
+  <h1>Adolatli <em>jamoalar</em> bir bosishda</h1>
+  <p>Ismlarni kiriting: JamoaX o'yinchilarni ikki teng guruhga bo'ladi. O'yin oldidan endi bahs bo'lmaydi.</p>
+  <div class="cta"><a class="btn" href="#try"><svg class="i" aria-hidden="true"><use href="#i-ball"/></svg> Jamoa tuzish</a><a class="btn ghost" href="#ai"><svg class="i" aria-hidden="true"><use href="#i-bot"/></svg> AI murabbiy</a></div>
+ </div>
+ <div class="pitch" aria-hidden="true"><svg viewBox="0 0 400 260" id="pitch"><g fill="none" stroke="#fff" stroke-opacity=".55" stroke-width="2"><rect x="10" y="10" width="380" height="240" rx="4"/><path d="M200 10v240"/><circle cx="200" cy="130" r="34"/><rect x="10" y="80" width="46" height="100"/><rect x="344" y="80" width="46" height="100"/></g></svg></div>
+</div></header>
+
+<div class="stats">
+ <div class="stat rv"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span><div><b data-to="24">0</b><span>gacha o'yinchi</span></div></div>
+ <div class="stat rv" style="--d:.08s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><div><b data-to="2">0</b><span>teng guruh</span></div></div>
+ <div class="stat rv" style="--d:.16s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-dice"/></svg></span><div><b data-to="100">0</b><span>% tasodifiy</span></div></div>
+ <div class="stat rv" style="--d:.24s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-ball"/></svg></span><div><b data-to="1">0</b><span>bosish yetarli</span></div></div>
+</div>
+
+<section class="sec" id="how"><h2 class="rv">To'rt qadamda tayyor</h2><p class="sub rv">Murakkab sozlamalar yo'q, hamma narsa bitta sahifada.</p>
+<div class="steps">
+ <div class="card rv"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-pen"/></svg></span><h3>Ismlarni kiriting</h3><p>Namuna ismlar tayyor. O'yinchi qo'shing va har biriga rol bering.</p></div>
+ <div class="card rv" style="--d:.08s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shuffle"/></svg></span><h3>Tasodifiy ajrating</h3><p>Bitta tugma ismlarni adolatli aralashtiradi.</p></div>
+ <div class="card rv" style="--d:.16s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span><h3>Teng guruhlar</h3><p>Rollar bo'yicha ham teng: har guruhga hujumchi va himoyachi tushadi.</p></div>
+ <div class="card rv" style="--d:.24s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-save"/></svg></span><h3>Saqlang yoki qayta</h3><p>Yoqmasa qayta aralashtiring, yoqsa saqlab qo'ying.</p></div>
+</div></section>
+
+<section class="sec" id="try"><h2 class="rv">Jamoalarni tuzing</h2><p class="sub rv">Ismlarni kiriting va tugmani bosing.</p>
+<div class="tool rv">
+ <div class="th2"><h3 class="t">O'yinchilar</h3><span class="count" id="count">0 / 8</span></div>
+ <div class="names" id="names"></div>
+ <p class="hint" id="info"></p><p class="err" id="err" role="alert"></p>
+ <div class="row"><button id="shuffle"><svg class="i" aria-hidden="true"><use href="#i-ball"/></svg> Tasodifiy ajratish</button><button id="addp" class="ghost"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg> O'yinchi qo'shish</button><button id="sample" class="ghost"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg> Namuna ismlar</button><button id="wipe" class="ghost"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg> Tozalash</button></div>
+ <h3 class="t hsv" id="res">Natija</h3>
+ <div id="result" aria-live="polite"><p class="empty">Hozircha guruhlar yo'q. «Tasodifiy ajratish» tugmasini bosing.</p></div>
+ <div class="row"><button id="again" class="ghost" disabled><svg class="i" aria-hidden="true"><use href="#i-repeat"/></svg> Qayta aralashtirish</button><button id="save" disabled><svg class="i" aria-hidden="true"><use href="#i-save"/></svg> Natijani saqlash</button></div>
+ <h3 class="t hsv">Saqlangan natijalar</h3>
+ <ul class="sv" id="saved"></ul>
+ <div class="row" style="margin-top:4px"><button id="clear" class="ghost"><svg class="i" aria-hidden="true"><use href="#i-trash"/></svg> Hammasini o'chirish</button></div>
+</div></section>
+
+<section class="sec" id="ai"><h2 class="rv">AI murabbiy</h2><p class="sub rv">Jamoalaringiz bo'yicha taktika, o'yin g'oyasi yoki maslahat so'rang. Yordamchi tuzilgan guruhlaringizni ko'radi.</p>
+<div class="ai rv">
+ <div class="th2"><h3 class="t" style="display:flex;align-items:center;gap:10px"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-bot"/></svg></span>JamoaX murabbiy</h3></div>
+ <details class="keybox" id="keybox" hidden><summary><span style="display:flex;align-items:center;gap:8px"><svg class="i" aria-hidden="true"><use href="#i-key"/></svg> API sozlamalari</span></summary>
+<div style="padding:0 18px 18px"><p class="hint" style="margin-top:0" id="aistat"></p>
+<label class="lbl" for="key">Anthropic API kaliti</label><input class="fld" id="key" type="password" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+<label class="lbl" for="model">Model</label><select class="fld" id="model"><option value="claude-haiku-5-5">Haiku 5.5 (tez)</option><option value="claude-sonnet-5-5">Sonnet 5.5</option><option value="claude-opus-5-5">Opus 5.5 (kuchli)</option></select>
+<div class="row"><button id="ksave">Saqlash</button><button id="kdel" class="ghost">Kalitni o'chirish</button></div>
+<p class="hint">Kalit faqat shu brauzerda saqlanadi va faqat api.anthropic.com ga yuboriladi. Kalit olish: console.anthropic.com</p></div></details>
+<div class="chips" id="chips"></div>
+ <div class="log" id="log" aria-live="polite"><div class="msg bot">Salom! Men JamoaX murabbiyiman. Jamoalarni tuzing, keyin taktika yoki o'yin g'oyalari so'rang.</div></div>
+ <div class="chatrow"><label class="box"><span class="sr" style="position:absolute;left:-9999px">Savol</span><input class="chatin" id="chatin" maxlength="300" placeholder="Savol yozing..." autocomplete="off"></label><button id="chatsend" aria-label="Yuborish"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></button></div>
+</div></section>
+
+<section class="sec" id="feat"><h2 class="rv">Nega JamoaX?</h2><p class="sub rv">Kichik vosita, lekin har bir tafsiloti o'ylangan.</p>
+<div class="feats">
+ <div class="card rv"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-dice"/></svg></span><h3>Haqiqiy tasodif</h3><p>Fisher–Yates usuli har bir o'yinchiga teng imkoniyat beradi.</p></div>
+ <div class="card rv" style="--d:.08s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-repeat"/></svg></span><h3>Har safar yangi</h3><p>Qayta aralashtirsangiz, oldingi taqsimot takrorlanmaydi.</p></div>
+ <div class="card rv" style="--d:.16s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-save"/></svg></span><h3>Saqlash</h3><p>Natijalar brauzerda qoladi, sahifani yopsangiz ham.</p></div>
+ <div class="card rv"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-phone"/></svg></span><h3>Telefonda qulay</h3><p>Maydonda turib, bir qo'lda ishlating.</p></div>
+ <div class="card rv" style="--d:.08s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Xatolardan himoya</h3><p>Bo'sh yoki takror ismlar qizil bilan ko'rsatiladi.</p></div>
+ <div class="card rv" style="--d:.16s"><span class="ico"><svg class="i" aria-hidden="true"><use href="#i-spark"/></svg></span><h3>AI maslahat</h3><p>Murabbiy taktika va o'yin g'oyalarini taklif qiladi.</p></div>
+</div></section>
+
+<section class="sec" id="faq" style="max-width:780px"><h2 class="rv">Savollar</h2><p class="sub rv"></p>
+<details class="rv"><summary>Guruhlar chindan teng bo'ladimi?</summary><p>Ha. Guruhlar soni va rollar (darvozabon, himoyachi, yarim himoyachi, hujumchi) bo'yicha teng bo'linadi, tanlov esa tasodifiy.</p></details>
+<details class="rv"><summary>Ismlarni o'zgartirsam bo'ladimi?</summary><p>Albatta. Ismlarni tahrirlash, o'yinchilar sonini 2 dan 24 gacha o'zgartirish mumkin. Ismlar takrorlanmasligi kerak.</p></details>
+<details class="rv"><summary>Natijalar qayerda saqlanadi?</summary><p>Faqat sizning brauzeringizda. Hech qayerga yuborilmaydi.</p></details>
+<details class="rv"><summary>AI murabbiy nima qila oladi?</summary><p>Guruhlaringiz bo'yicha taktika va o'yin g'oyalari beradi. claude.ai ichida kalit kerak emas. Sahifani yuklab olsangiz, o'z Anthropic API kalitingizni kiriting.</p></details>
+</section>
+
+<div class="final-w"><div class="final rv"><h2>O'yin boshlansin!</h2><p>Bahslarni qoldiring, jamoalarni bir bosishda tuzing.</p><a class="btn" href="#try"><svg class="i" aria-hidden="true"><use href="#i-ball"/></svg> Jamoa tuzish</a></div></div>
+<footer>© JamoaX · Futbol va faol dam olish uchun yaratilgan</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+const SAMPLE=["Aziz","Dilnoza","Jasur","Malika","Sardor","Nodira","Bobur","Zilola"];
+const KS="jamoax-saved-v2",KN="jamoax-players-v3";
+const $=id=>document.getElementById(id);
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let current=null,saved=[],busy=false,tT,cT;
+const store={get(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+
+/* theme */
+$("tgl").onclick=()=>{const d=document.documentElement,n=d.dataset.theme==="dark"?"light":"dark";d.dataset.theme=n;try{localStorage.setItem("jx-theme",n);}catch(e){}};
+
+/* hero pitch */
+(function(){
+  const NS="http://www.w3.org/2000/svg",g=document.createElementNS(NS,"g");
+  const A=[[80,60],[80,200],[140,95],[140,165]],B=[[320,60],[320,200],[260,95],[260,165]];
+  [...A.map(p=>[p,"#3b82f6"]),...B.map(p=>[p,"#ffa42b"])].forEach(([p,c],i)=>{
+    const d=document.createElementNS(NS,"g");d.setAttribute("class","dot");
+    d.style.setProperty("--x",(p[0]-200)+"px");d.style.setProperty("--y",(p[1]-130)+"px");d.style.animationDelay=(i*.06)+"s";
+    d.innerHTML='<circle cx="200" cy="130" r="15" fill="'+c+'" stroke="#fff" stroke-width="3"/><text x="200" y="135" text-anchor="middle" font-size="14" font-weight="800" fill="#fff" font-family="Nunito,sans-serif">'+(i%4+1)+'</text>';
+    g.appendChild(d);
+  });
+  $("pitch").appendChild(g);
+})();
+
+/* reveal + counters */
+function count(el){const to=+el.dataset.to;if(reduce){el.textContent=to;return;}const t0=performance.now();(function f(t){const p=Math.min((t-t0)/1200,1);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f);})(t0);}
+const rv=document.querySelectorAll(".rv");
+if("IntersectionObserver" in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");const b=e.target.querySelector("[data-to]");if(b)count(b);io.unobserve(e.target);}}),{threshold:.12});rv.forEach(t=>io.observe(t));}
+else rv.forEach(t=>{t.classList.add("in");const b=t.querySelector("[data-to]");if(b)count(b);});
+
+const ic=n=>'<svg class="i" aria-hidden="true"><use href="#i-'+n+'"/></svg>';
+const sfx={tick(){},pop(){},err(){},ok(){},whistle(){}};
+
+/* mobile menu */
+const links=$("links"),mb=$("menu");
+function closeMenu(){links.classList.remove("open");mb.setAttribute("aria-expanded","false");}
+mb.onclick=e=>{e.stopPropagation();const o=links.classList.toggle("open");mb.setAttribute("aria-expanded",String(o));};
+links.addEventListener("click",e=>{if(e.target.closest("a"))closeMenu();});
+document.addEventListener("click",e=>{if(!links.contains(e.target))closeMenu();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeMenu();});
+
+/* players */
+const MIN=2,MAX=24,box=$("names"),inputs=[];
+const EXTRA=["Anvar","Madina","Rustam","Gulnora","Otabek","Shahlo","Kamol","Laylo","Timur","Sevara","Doniyor","Nigora","Islom","Hilola","Farhod","Zarina"];
+const POS={any:["Ixtiyoriy","","IXT"],gk:["Darvozabon","glove"],df:["Himoyachi","shield"],mf:["Yarim himoyachi","mid"],fw:["Hujumchi","zap"]};
+const ORD=["gk","df","mf","fw","any"],ROLE0=["gk","df","df","mf","mf","fw","gk","fw"];
+const fmt=p=>p.pos==="any"?p.name:p.name+" ("+POS[p.pos][0]+")";
+const selOf=inp=>inp.parentNode.querySelector("select");
+function persistNames(){store.set(KN,inputs.map(x=>({n:x.value,p:selOf(x).value})));}
+function mk(v,p){
+  const w=document.createElement("div");w.className="p";
+  const n=document.createElement("span");n.className="n";
+  const inp=document.createElement("input");inp.maxLength=20;inp.placeholder="Ism kiriting";inp.autocomplete="off";inp.value=v;
+  const sel=document.createElement("select");sel.className="rsel";
+  Object.keys(POS).forEach(k=>{const o=document.createElement("option");o.value=k;o.textContent=k==="any"?"Rol: ixtiyoriy":POS[k][0];sel.appendChild(o);});
+  sel.value=POS[p]?p:"any";
+  const x=document.createElement("button");x.type="button";x.className="ghost rm";x.innerHTML=ic("x");
+  w.append(n,inp,x,sel);box.appendChild(w);inputs.push(inp);
+  inp.addEventListener("input",()=>{w.classList.remove("bad");$("err").textContent="";upd();persistNames();});
+  sel.addEventListener("change",()=>{persistNames();sfx.pop();});
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();const k=inputs.indexOf(inp);k<inputs.length-1?inputs[k+1].focus():split();}});
+  x.onclick=()=>{if(inputs.length<=MIN){toast("Kamida "+MIN+" ta o'yinchi kerak");sfx.err();return;}inputs.splice(inputs.indexOf(inp),1);w.remove();sfx.pop();upd();persistNames();};
+  return inp;
+}
+function upd(){
+  inputs.forEach((inp,k)=>{inp.parentNode.firstChild.textContent=k+1;inp.setAttribute("aria-label",(k+1)+"-o'yinchi ismi");inp.parentNode.querySelector(".rm").setAttribute("aria-label",(k+1)+"-o'yinchini olib tashlash");selOf(inp).setAttribute("aria-label",(k+1)+"-o'yinchi roli");});
+  const n=inputs.length,c=inputs.filter(i=>i.value.trim()).length,h=Math.ceil(n/2),e=$("count");
+  e.textContent=c+" / "+n+" to'ldirilgan";e.className="count"+(c===n?" ok":"");
+  $("info").textContent=n+" o'yinchi: "+h+" va "+(n-h)+" kishilik guruhlar chiqadi. Rollar tanlansa, guruhlar rollar bo'yicha ham teng bo'linadi.";
+  $("addp").disabled=n>=MAX;
+}
+let init=store.get(KN);if(!Array.isArray(init)||init.length<MIN||init.length>MAX||!init.every(v=>v&&typeof v.n==="string"))init=SAMPLE.map((n,i)=>({n,p:ROLE0[i]}));
+init.forEach(v=>mk(v.n,v.p));upd();
+$("addp").onclick=()=>{
+  if(inputs.length>=MAX){toast("Eng ko'pi bilan "+MAX+" ta o'yinchi");return;}
+  const used=inputs.map(i=>i.value.trim().toLowerCase());
+  let nm=EXTRA.find(x=>!used.includes(x.toLowerCase()))||("O'yinchi "+(inputs.length+1));
+  const inp=mk(nm,"any");upd();persistNames();sfx.pop();inp.focus();inp.select();
+};
+
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("show");clearTimeout(tT);tT=setTimeout(()=>e.classList.remove("show"),2400);}
+function fail(t,els){$("err").textContent=t;els.forEach(e=>e.parentNode.classList.add("bad"));if(els[0])els[0].focus();sfx.err();}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function read(){
+  inputs.forEach(i=>i.parentNode.classList.remove("bad"));$("err").textContent="";
+  const names=inputs.map(i=>i.value.trim().replace(/\s+/g," "));
+  const em=inputs.filter((_,i)=>!names[i]);
+  if(em.length)return fail("Bo'sh ismlar bor: "+em.length+" ta maydonni to'ldiring yoki olib tashlang.",em),null;
+  const seen={},dup=[];
+  names.forEach((n,i)=>{const k=n.toLocaleLowerCase();if(k in seen)dup.push(inputs[i],inputs[seen[k]]);else seen[k]=i;});
+  if(dup.length)return fail("Ismlar takrorlanmasligi kerak. Qizil maydonlarni o'zgartiring.",dup),null;
+  return names;
+}
+const key=l=>l.map(p=>p.name).sort().join("|");
+function balance(players){
+  const cap=Math.ceil(players.length/2),A=[],B=[],g={};
+  players.forEach(p=>{(g[p.pos]=g[p.pos]||[]).push(p);});
+  ORD.forEach(k=>{shuffle(g[k]||[]).forEach(p=>{
+    const ca=A.filter(x=>x.pos===k).length,cb=B.filter(x=>x.pos===k).length;let toA;
+    if(A.length>=cap)toA=false;else if(B.length>=cap)toA=true;
+    else if(ca!==cb)toA=ca<cb;else if(A.length!==B.length)toA=A.length<B.length;else toA=Math.random()<.5;
+    (toA?A:B).push(p);});});
+  return Math.random()<.5?[A,B]:[B,A];
+}
+function split(){
+  if(busy)return;const names=read();if(!names)return;
+  const players=names.map((n,i)=>({name:n,pos:selOf(inputs[i]).value}));
+  let a,b,t=0;
+  do{[a,b]=balance(players);t++;}while(current&&t<60&&(key(a)===current.ka||key(a)===current.kb));
+  const o=(x,y)=>ORD.indexOf(x.pos)-ORD.indexOf(y.pos);a.sort(o);b.sort(o);
+  current={a,b,ka:key(a),kb:key(b),saved:false};reveal(names);
+}
+function team(c,t,n){const d=document.createElement("div");d.className="team "+c;d.innerHTML='<div class="thd"><span></span><span></span></div><ul></ul>';const s=d.querySelectorAll(".thd span");s[0].textContent=t;s[1].textContent=n+" kishi";return d;}
+function reveal(names){
+  busy=true;["shuffle","again","save"].forEach(i=>$(i).disabled=true);$("save").lastChild.textContent=" Natijani saqlash";
+  const r=$("result");r.innerHTML="";const w=document.createElement("div");w.className="teams";
+  const A=team("a","1-guruh",current.a.length),B=team("b","2-guruh",current.b.length);w.append(A,B);r.appendChild(w);
+  const slots=[];
+  [[A,current.a],[B,current.b]].forEach(([t,l])=>{const ul=t.querySelector("ul");l.forEach((p,i)=>{const li=document.createElement("li");li.className="roll";li.innerHTML="<i>"+(i+1)+"</i><span></span>";ul.appendChild(li);slots.push({li,p,i});});});
+  $("res").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+  const fin=()=>{slots.forEach(s=>{s.li.className="pop";s.li.style.animationDelay=(s.i%6)*90+"ms";s.li.querySelector("span").textContent=s.p.name;if(s.p.pos!=="any")s.li.insertAdjacentHTML("beforeend",'<em class="rl">'+ic(POS[s.p.pos][1])+POS[s.p.pos][0]+"</em>");});busy=false;["shuffle","again","save"].forEach(i=>$(i).disabled=false);sfx.whistle();toast("Guruhlar tuzildi");};
+  if(reduce){fin();return;}
+  let k=0;const iv=setInterval(()=>{slots.forEach(s=>s.li.querySelector("span").textContent=names[Math.floor(Math.random()*names.length)]);if(k%2===0)sfx.tick();if(++k>=15){clearInterval(iv);fin();}},65);
+}
+function renderSaved(){
+  const ul=$("saved");ul.innerHTML="";$("clear").style.display=saved.length?"":"none";
+  if(!saved.length){ul.innerHTML='<p class="empty">Hali hech narsa saqlanmagan.</p>';return;}
+  saved.forEach((s,idx)=>{
+    const li=document.createElement("li"),d=document.createElement("div");
+    d.innerHTML='<small></small><div class="tt ta"><b>1:</b> <span></span></div><div class="tt tb"><b>2:</b> <span></span></div>';
+    d.querySelector("small").textContent=s.time;const sp=d.querySelectorAll("span");sp[0].textContent=s.a.join(", ");sp[1].textContent=s.b.join(", ");
+    const x=document.createElement("button");x.className="ghost";x.innerHTML=ic("trash");x.setAttribute("aria-label",(idx+1)+"-natijani o'chirish");
+    x.onclick=()=>{saved.splice(idx,1);store.set(KS,saved);renderSaved();sfx.pop();toast("Natija o'chirildi");};
+    li.append(d,x);ul.appendChild(li);
+  });
+}
+$("shuffle").onclick=split;$("again").onclick=split;
+$("save").onclick=()=>{
+  if(!current||busy)return;if(current.saved){toast("Bu natija allaqachon saqlangan");return;}
+  let time;try{time=new Date().toLocaleString("uz-UZ",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});}catch(e){time=new Date().toString();}
+  saved.unshift({a:current.a.map(fmt),b:current.b.map(fmt),time});saved=saved.slice(0,20);current.saved=true;store.set(KS,saved);renderSaved();$("save").lastChild.textContent=" Saqlandi";sfx.ok();toast("Natija saqlandi");
+};
+$("sample").onclick=()=>{inputs.splice(0).forEach(i=>i.parentNode.remove());SAMPLE.forEach((n,i)=>mk(n,ROLE0[i]));$("err").textContent="";upd();persistNames();sfx.pop();toast("Namuna ismlar qo'yildi");};
+$("wipe").onclick=()=>{inputs.forEach(e=>{e.value="";e.parentNode.classList.remove("bad");});$("err").textContent="";upd();persistNames();inputs[0].focus();};
+$("clear").onclick=()=>{const b=$("clear");
+  if(!b.dataset.s){b.dataset.s="1";b.lastChild.textContent=" Aniq o'chirilsinmi? Yana bosing";cT=setTimeout(()=>{delete b.dataset.s;b.lastChild.textContent=" Hammasini o'chirish";},3000);return;}
+  clearTimeout(cT);delete b.dataset.s;b.lastChild.textContent=" Hammasini o'chirish";saved=[];store.set(KS,saved);renderSaved();toast("Hammasi o'chirildi");};
+const s0=store.get(KS);if(Array.isArray(s0))saved=s0.filter(x=>x&&Array.isArray(x.a)&&Array.isArray(x.b)&&typeof x.time==="string");
+renderSaved();
+
+/* AI coach: claude.ai ichida "sample", yuklab olinganda API kalit */
+/* API kalitni shu yerga yozing: const API_KEY="sk-ant-..."; Faqat o'zingiz uchun, sahifani boshqalarga bermang! */
+const API_KEY="";
+/* TEKIN variant: Google Gemini kaliti (aistudio.google.com/apikey): const GEMINI_KEY="AIza..."; */
+const GEMINI_KEY="";
+/* AI/ML API (aimlapi.com) kaliti: */
+const AIML_KEY="";
+/* TEKIN: Groq kaliti (console.groq.com/keys): const GROQ_KEY="gsk_..."; */
+const GROQ_KEY="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";
+const KK="jamoax-apikey",KM="jamoax-model",log=$("log"),hist=[];let sample=null,aiBusy=false;
+const SYS="Sen JamoaX saytidagi futbol va faol dam olish murabbiyisan. O'zbek tilida, do'stona va aniq javob ber (6-8 jumlagacha). Markdown, yulduzcha va sarlavha ishlatma, oddiy matn yoz. SAYT HAQIDA (faqat shu ma'lumotga tayan, yo'q imkoniyatlarni o'ylab topma): JamoaX o'yinchilarni ikki guruhga bo'luvchi sayt. 'O'yinchilar' bo'limida 2 tadan 24 tagacha o'yinchi bo'ladi (boshida 8 ta); ism yoziladi, o'ngdagi × tugmasi o'yinchini olib tashlaydi, 'O'yinchi qo'shish' yangisini qo'shadi. Har bir o'yinchi ostida rol menyusi bor: 'Rol: ixtiyoriy', Darvozabon, Himoyachi, Yarim himoyachi, Hujumchi. 'Rol: ixtiyoriy' degani o'yinchiga aniq rol berilmagan, bu odatiy holat va xato emas. Rol tanlash majburiy emas. 'Tasodifiy ajratish' tugmasi o'yinchilarni ikki guruhga bo'ladi: soni teng (toq bo'lsa farq bir kishi), rollar ham teng taqsimlanadi, masalan ikki hujumchi har xil guruhga tushadi. Rolsiz o'yinchilar oxirida sonni tenglash uchun joylanadi. 'Qayta aralashtirish' oldingisidan boshqacha taqsimot beradi. 'Natijani saqlash' natijani brauzerda saqlaydi. Sayt avtomatik taktika sxemasi chizmaydi va rolga qarab maydon pozitsiyasini belgilamaydi. Foydalanuvchi sayt haqida so'rasa, shu tavsifga tayanib aniq tushuntir. Quyida hozirgi holat beriladi.";
+function stat(){$("aistat").textContent=sample?"Claude ichki rejimi faol: API kalit kerak emas.":((GROQ_KEY||AIML_KEY||GEMINI_KEY||API_KEY||store.get(KK))?"API kalit saqlangan, yordamchi tayyor.":"Yordamchi ishlashi uchun API kalit kiriting.");}
+$("key").value=typeof store.get(KK)==="string"?store.get(KK):"";
+{const m=store.get(KM);if(typeof m==="string")$("model").value=m;if(!$("model").value)$("model").value="claude-sonnet-5-5";}
+$("model").onchange=()=>store.set(KM,$("model").value);
+$("ksave").onclick=()=>{const v=$("key").value.trim();if(!v){toast("Avval kalitni kiriting");sfx.err();return;}store.set(KK,v);store.set(KM,$("model").value);stat();sfx.ok();toast("Kalit saqlandi");};
+$("kdel").onclick=()=>{try{localStorage.removeItem(KK);}catch(e){}$("key").value="";stat();toast("Kalit o'chirildi");};
+["Bu jamoalar uchun taktika ber","Tanaffusda qanday mini-o'yin o'ynaymiz?","Guruhlarga nom o'ylab top"].forEach(q=>{const b=document.createElement("button");b.className="ghost";b.textContent=q;b.onclick=()=>ask(q);$("chips").appendChild(b);});
+function bubble(cls,txt){const d=document.createElement("div");d.className="msg "+cls;d.textContent=txt;log.appendChild(d);log.scrollTop=log.scrollHeight;return d;}
+function ctx(){
+  const ps=inputs.map(i=>({name:i.value.trim(),pos:selOf(i).value})).filter(p=>p.name);
+  const f=p=>p.name+" ("+(p.pos==="any"?"rol tanlanmagan":POS[p.pos][0])+")";
+  const cnt={};ps.forEach(p=>{cnt[p.pos]=(cnt[p.pos]||0)+1;});
+  const roles=ORD.filter(k=>cnt[k]).map(k=>(k==="any"?"rol tanlanmagan":POS[k][0])+": "+cnt[k]).join(", ");
+  let t="Hozir "+ps.length+" ta o'yinchi kiritilgan: "+ps.map(f).join(", ")+". Rollar bo'yicha: "+(roles||"yo'q")+".";
+  t+=current?" Guruhlar tuzilgan. 1-guruh: "+current.a.map(f).join(", ")+". 2-guruh: "+current.b.map(f).join(", ")+".":" Guruhlar hali tuzilmagan.";
+  return t;
+}
+async function viaApi(k,msgs,c){
+  const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"content-type":"application/json","x-api-key":k,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:$("model").value,max_tokens:700,system:SYS+" Hozirgi holat: "+c,messages:msgs})});
+  if(!res.ok){let m="";try{const j=await res.json();m=(j.error&&j.error.message)||"";}catch(e){}throw{code:res.status===401||res.status===403?"bad_key":res.status===429?"rate_limited":"http",message:m};}
+  const j=await res.json();return(j.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("").trim();
+}
+let groqModels=null,groqOk=null;
+async function viaGroq(msgs,c){
+  const H={"content-type":"application/json","authorization":"Bearer "+GROQ_KEY};
+  if(!groqModels){
+    const r=await fetch("https://api.groq.com/openai/v1/models",{headers:H});
+    if(!r.ok){let m="";try{const j=await r.json();m=(j.error&&j.error.message)||"";}catch(e){}throw{code:r.status===401?"bad_key":"http",message:m};}
+    const ids=((await r.json()).data||[]).map(x=>x.id).filter(id=>!/whisper|guard|tts|orpheus|playai|safeguard|distil|embed|vision-preview/i.test(id));
+    const pref=["llama-3.3-70b-versatile","openai/gpt-oss-20b","llama-3.1-8b-instant","openai/gpt-oss-120b","meta-llama/llama-4-scout-17b-16e-instruct","qwen/qwen3-32b"];
+    groqModels=pref.filter(p=>ids.includes(p)).concat(ids.filter(i=>!pref.includes(i)));
+    if(!groqModels.length)throw{code:"http",message:"Hisobingizda mavjud model topilmadi."};
+  }
+  const list=groqOk?[groqOk]:groqModels.slice(0,5);
+  let last;
+  for(const model of list){
+    const res=await fetch("https://api.groq.com/openai/v1/chat/completions",{method:"POST",headers:H,body:JSON.stringify({model,max_tokens:700,messages:[{role:"system",content:SYS+" Hozirgi holat: "+c}].concat(msgs)})});
+    if(res.ok){const j=await res.json();groqOk=model;return((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||"").trim();}
+    let m="";try{const j=await res.json();m=(j.error&&j.error.message)||"";}catch(e){}
+    last={code:res.status===401?"bad_key":res.status===429?"rate_limited":"http",message:m};
+    if(groqOk){groqOk=null;}
+    if(![400,403,404,429].includes(res.status))break;
+  }
+  throw last;
+}
+async function viaAiml(msgs,c){
+  const res=await fetch("https://api.aimlapi.com/v1/chat/completions",{method:"POST",headers:{"content-type":"application/json","authorization":"Bearer "+AIML_KEY},body:JSON.stringify({model:"openai/gpt-4o-mini",max_tokens:700,messages:[{role:"system",content:SYS+" Hozirgi holat: "+c}].concat(msgs)})});
+  if(!res.ok){let m="";try{const j=await res.json();m=(j.error&&j.error.message)||j.message||"";}catch(e){}throw{code:res.status===401?"bad_key":(res.status===402||/fund|balance|credit/i.test(m))?"no_credit":res.status===429?"rate_limited":"http",message:m};}
+  const j=await res.json();return((j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content)||"").trim();
+}
+async function viaGemini(msgs,c){
+  const res=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent",{method:"POST",headers:{"content-type":"application/json","x-goog-api-key":GEMINI_KEY},body:JSON.stringify({systemInstruction:{parts:[{text:SYS+" Hozirgi holat: "+c}]},contents:msgs.map(m=>({role:m.role==="assistant"?"model":"user",parts:[{text:m.content}]})),generationConfig:{maxOutputTokens:700}})});
+  if(!res.ok){let m="";try{const j=await res.json();m=(j.error&&j.error.message)||"";}catch(e){}throw{code:[400,401,403].includes(res.status)?"bad_key":res.status===429?"rate_limited":"http",message:m};}
+  const j=await res.json();const p=j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts;
+  return(p||[]).map(x=>x.text||"").join("").trim();
+}
+async function ask(q){
+  q=(q||"").trim();if(!q||aiBusy)return;
+  const k=API_KEY||store.get(KK);
+  if(!sample&&!k&&!GEMINI_KEY&&!AIML_KEY&&!GROQ_KEY){bubble("bot","AI murabbiy hozircha o'chiq. Kodda GROQ_KEY, AIML_KEY, GEMINI_KEY yoki API_KEY kiritilgan bo'lishi kerak.");sfx.err();return;}
+  $("chatin").value="";bubble("me",q);sfx.pop();
+  const bot=bubble("bot","");bot.innerHTML='<span class="dots"><span></span><span></span><span></span></span>';
+  aiBusy=true;$("chatsend").disabled=true;
+  const base=hist.slice(-8);while(base.length&&base[0].role!=="user")base.shift();
+  const c=ctx();
+  try{
+    let out="";
+    if(sample){
+      const r=await sample(base.concat([{role:"user",content:SYS+" Hozirgi holat: "+c+"\n\nSavol: "+q}]),{cache:false,onText:({text})=>{if(text)bot.textContent=text;log.scrollTop=log.scrollHeight;}});
+      out=(r&&r.text||"").trim();
+    }else if(GROQ_KEY)out=await viaGroq(base.concat([{role:"user",content:q}]),c);
+    else if(AIML_KEY)out=await viaAiml(base.concat([{role:"user",content:q}]),c);
+    else if(GEMINI_KEY)out=await viaGemini(base.concat([{role:"user",content:q}]),c);
+    else out=await viaApi(k,base.concat([{role:"user",content:q}]),c);
+    out=out||"Javob olinmadi, qayta urinib ko'ring.";
+    bot.textContent=out;hist.push({role:"user",content:q},{role:"assistant",content:out});sfx.ok();
+  }catch(e){
+    const cd=e&&e.code;
+    bot.textContent=cd==="not_granted"?"AI murabbiyga ruxsat berilmadi. Ruxsat berib, qayta urinib ko'ring.":cd==="no_credit"?"AI/ML API hisobida kredit yo'q. Hisobni to'ldiring.":cd==="bad_key"?"API kalit noto'g'ri yoki ruxsati yo'q. Kalitni tekshiring.":cd==="rate_limited"?"So'rovlar juda ko'p. Biroz kutib, qayta urinib ko'ring.":(e&&e.name==="TypeError")?"Tarmoqqa ulanib bo'lmadi. Internetni tekshiring.":"Xatolik yuz berdi"+(e&&e.message?": "+e.message:".");
+    sfx.err();
+  }
+  aiBusy=false;$("chatsend").disabled=false;log.scrollTop=log.scrollHeight;
+}
+$("chatsend").onclick=()=>ask($("chatin").value);
+$("chatin").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();ask($("chatin").value);}});
+stat();
+(async()=>{try{if(window.claude&&claude.use)sample=await claude.use("sample");}catch(e){sample=null;}stat();})();
+})();
+</script>
+</body>
+</html>
