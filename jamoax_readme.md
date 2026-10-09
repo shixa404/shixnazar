@@ -4,6 +4,8 @@
 
 Loyiha ichiga o'yin taktikasi va maslahatlar beruvchi **AI Murabbiy** ham integratsiya qilingan.
 
+bilet raqami 18
+
 ## 👤 Muallif
 
 * **Muallif:** Shixnazar Obodov
